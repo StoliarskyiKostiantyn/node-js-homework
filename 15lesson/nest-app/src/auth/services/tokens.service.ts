@@ -10,6 +10,8 @@ export class TokensService {
     accessToken: string,
     refreshToken: string,
   ): Promise<void> {
+    // delete old tokens
+    await this.deleteTokensByUserId(userId);
     await this.pool.query(
       'INSERT INTO tokens (user_id, access_token, refresh_token) VALUES ($1, $2, $3)',
       [userId, accessToken, refreshToken],
